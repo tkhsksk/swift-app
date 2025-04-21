@@ -1,24 +1,13 @@
-//
-//  ContentView.swift
-//  echo-api
-//
-//  Created by 髙橋佳佑 on 2025/04/21.
-//
-
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+    @EnvironmentObject var session: SessionManager
 
-#Preview {
-    ContentView()
+    var body: some View {
+        if session.isLoggedIn {
+            HomeView()
+        } else {
+            LoginView()
+        }
+    }
 }
