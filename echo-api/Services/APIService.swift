@@ -17,7 +17,16 @@ class APIService {
     }
 
     func login(email: String, password: String, completion: @escaping (Bool) -> Void) {
-        guard let url = URL(string: "https://api.ksk318.me/login") else { return }
+        guard let baseURL = Bundle.main.object(forInfoDictionaryKey: "API_URL") as? String else {
+            print("API_URL を Info.plist から取得できませんでした")
+            return
+        }
+
+        guard let url = URL(string: baseURL + "/login") else {
+            print("URL生成に失敗しました: \(baseURL + "/login")")
+            return
+        }
+
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
