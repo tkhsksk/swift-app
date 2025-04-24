@@ -6,6 +6,7 @@ struct LoginView: View {
     @State private var password = "password123"
     @State private var loginFailed = false
     @State private var isLoggedIn = false
+    @State private var showAlert = false
     
     var body: some View {
         VStack(spacing: 16) {
@@ -18,10 +19,6 @@ struct LoginView: View {
             SecureField("パスワード", text: $password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
 
-            if loginFailed {
-                Text("ログイン失敗").foregroundColor(.red)
-            }
-
             Button("ログイン") {
                 loginFailed = false
                 APIService.shared.login(email: email, password: password) { success in
@@ -32,10 +29,14 @@ struct LoginView: View {
                         isLoggedIn = true
                     } else {
                         loginFailed = true
+                        showAlert = true
                     }
                 }
             }
             .padding(.top)
+        }
+        .alert("ログイン情報が違います", isPresented: $showAlert) {
+            Button("OK", role: .cancel) { }
         }
         .padding()
     }
