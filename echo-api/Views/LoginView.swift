@@ -7,7 +7,20 @@ struct LoginView: View {
     @State private var loginFailed = false
     @State private var isLoggedIn = false
     @State private var showAlert = false
-    
+    var greeting: [String] {
+        let hour = Calendar.current.component(.hour, from: Date())
+        switch hour {
+            case 9..<18: return [
+                "ログイン情報が違います",
+                "メールアドレスもしくはパスワードをご確認ください"
+            ]
+            default: return [
+                "APIが稼働していません",
+                "9:00〜18:00の間に再度お試しください"
+            ]
+        }
+    }
+//    ここからページの本体
     var body: some View {
         VStack(spacing: 16) {
             Text("ログイン").font(.largeTitle)
@@ -24,7 +37,7 @@ struct LoginView: View {
                 APIService.shared.login(email: email, password: password) { success in
                     if success {
                         if let sessionID = APIService.shared.sessionID {
-                            session.updateSessionID(sessionID) // ✅ ここ追加！！
+                            session.updateSessionID(sessionID) // セッションをアップデート
                         }
                         isLoggedIn = true
                     } else {
@@ -34,9 +47,13 @@ struct LoginView: View {
                 }
             }
             .padding(.top)
+            
         }
-        .alert("ログイン情報が違います", isPresented: $showAlert) {
+//        アラートの表示
+        .alert(greeting[0], isPresented: $showAlert) {
             Button("OK", role: .cancel) { }
+        } message: {
+            Text(greeting[1])
         }
         .padding()
     }
