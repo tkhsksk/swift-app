@@ -3,21 +3,11 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var session: SessionManager
     @State private var displayedSessionID: String = ""
+    @State private var showAlert = false
 
     var body: some View {
         VStack {
             Text("ようこそ！").font(.title)
-            
-            Text("セッションID: \(displayedSessionID.isEmpty ? "未取得" : displayedSessionID)")
-                .padding()
-
-//            Button("セッションIDを手動取得") {
-//                if let sessionID = session.sessionID {
-//                    displayedSessionID = sessionID
-//                } else {
-//                    displayedSessionID = "セッションが見つかりません"
-//                }
-//            }
             
             Button("ログアウト") {
                 session.logout()
@@ -25,11 +15,18 @@ struct HomeView: View {
             .padding()
         }
         .padding()
+//        画面が表示されたら実行
         .onAppear {
-            // ✅ 画面表示時にセッションIDを読み込む
             if let sessionID = session.sessionID {
                 displayedSessionID = sessionID
+                showAlert = true
             }
+        }
+//        アラートの表示
+        .alert("ログインに成功しました", isPresented: $showAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("セッションID: \(displayedSessionID.isEmpty ? "未取得" : displayedSessionID)")
         }
     }
 }
