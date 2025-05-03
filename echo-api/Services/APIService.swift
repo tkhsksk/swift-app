@@ -22,8 +22,8 @@ class APIService {
             return
         }
 
-        guard let url = URL(string: baseURL + "/user/login") else {
-            print("URL生成に失敗しました: \(baseURL + "/user/login")")
+        guard let url = URL(string: baseURL + "/auth/user/login") else {
+            print("URL生成に失敗しました: \(baseURL + "/auth/user/login")")
             return
         }
 

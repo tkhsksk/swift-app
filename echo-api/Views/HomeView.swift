@@ -6,15 +6,7 @@ struct HomeView: View {
     @State private var showAlert = false
 
     var body: some View {
-        VStack {
-            Text("ようこそ！").font(.title)
-            
-            Button("ログアウト") {
-                session.logout()
-            }
-            .padding()
-        }
-        .padding()
+        AnyView(TabbarView())
 //        画面が表示されたら実行
         .onAppear {
             if let sessionID = session.sessionID {
