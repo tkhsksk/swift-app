@@ -19,7 +19,7 @@ struct TabbarView: View {
             }
             .tag(0)
             .tabItem {
-                Image("activity-1")
+                Image("icon-activity")
                     .resizable()
                 Text("Activities")
             }
@@ -31,7 +31,7 @@ struct TabbarView: View {
             }
             .tag(1)
             .tabItem {
-                Image("shopping-cart-icon")
+                Image("icon-cart")
                 Text("Cart")
             }
             
@@ -40,7 +40,7 @@ struct TabbarView: View {
                   }
                    .tag(2)
                     .tabItem {
-                    Image("profile-glyph-icon")
+                    Image("icon-profile")
                     Text("Account")
                 }
         }

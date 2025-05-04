@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FFDCA88F2DB629BF006E472F /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = FFDCA88E2DB629BF006E472F /* KeychainAccess */; };
+		FFF534AC2DC6F407009372D0 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFF780022DC5E92200013DDB /* Media.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,11 +32,27 @@
 		FFDCA82D2DB626C6006E472F /* echo-api.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "echo-api.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFDCA83D2DB626C8006E472F /* echo-apiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "echo-apiTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFDCA8472DB626C8006E472F /* echo-apiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "echo-apiUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFF780022DC5E92200013DDB /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		FFF534AB2DC6F3F9009372D0 /* Exceptions for "echo-api" folder in "echo-api" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+				Info.plist.sample,
+				"Preview Content/Preview Assets.xcassets",
+			);
+			target = FFDCA82C2DB626C5006E472F /* echo-api */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		FFDCA82F2DB626C6006E472F /* echo-api */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FFF534AB2DC6F3F9009372D0 /* Exceptions for "echo-api" folder in "echo-api" target */,
+			);
 			path = "echo-api";
 			sourceTree = "<group>";
 		};
@@ -80,6 +97,7 @@
 		FFDCA8242DB626C5006E472F = {
 			isa = PBXGroup;
 			children = (
+				FFF780022DC5E92200013DDB /* Media.xcassets */,
 				FFDCA82F2DB626C6006E472F /* echo-api */,
 				FFDCA8402DB626C8006E472F /* echo-apiTests */,
 				FFDCA84A2DB626C8006E472F /* echo-apiUITests */,
@@ -106,6 +124,7 @@
 			buildPhases = (
 				FFDCA8292DB626C5006E472F /* Sources */,
 				FFDCA82A2DB626C5006E472F /* Frameworks */,
+				FFF534AA2DC6F3F9009372D0 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -227,6 +246,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFF534AA2DC6F3F9009372D0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFF534AC2DC6F407009372D0 /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

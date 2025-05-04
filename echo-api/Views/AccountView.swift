@@ -69,7 +69,7 @@ struct AccountView: View {
                     
                     Section(footer: Text("Allow push notifications to get latest travel and equipment deals")) {
                         Toggle(isOn: self.$locationUsage) {
-                              Text("Location Usage")
+                            Text("Location Usage")
                         }
                         Toggle(isOn: self.$notificationToggle) {
                             Text("Notifications")

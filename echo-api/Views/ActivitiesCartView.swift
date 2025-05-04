@@ -125,9 +125,11 @@ struct ShoppingFinalInfoView: View {
                         Spacer()
                     }
                     Text("Shipping to the United States")
-                        .font(.system(size: 12)).padding(.leading, 20)
+                        .font(.system(size: 12))
+                        .padding(.leading, 20)
                     Text("from $225")
-                        .font(.system(size: 12)).padding(.leading, 20)
+                        .font(.system(size: 12))
+                        .padding(.leading, 20)
                 }
                 .frame(width: geometry.size.width / 2 - 12)
 

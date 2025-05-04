@@ -50,6 +50,7 @@ struct PlaceDetailView : View {
                     
                     Spacer()
                     
+//                    場所sheetのスライドの背景
                     PlacesDetail(placeItems: self.placeItem?.famousPointsArray[self.selectedPoint.selectedIndex] ?? self.defaultPoint)
                         .padding(.bottom, 50)
                     
@@ -61,7 +62,8 @@ struct PlaceDetailView : View {
                                 ForEach(self.placeItem?.famousPointsArray ?? [], id: \.id) { item in
                                     PlacesCircleView(placeItems: item, selectedPoint: self.selectedPoint)
                                 }
-                            }.frame(width: g.size.width, height: 130)
+                            }.frame(height: 130, alignment: .leading)
+                                .padding(.leading, 8).padding(.trailing, 8)
                         }
                     }.padding(.bottom, 50)
                     
@@ -72,33 +74,45 @@ struct PlaceDetailView : View {
     }
 }
 
+// 場所sheetのスライド1つ
 struct PlacesCircleView: View {
     var placeItems: ActivitiesFamousPoints
     @ObservedObject var selectedPoint: SelectedPoint
     
     var body: some View {
-        GeometryReader { g in
-            Button(action: {
-                self.selectedPoint.selectedIndex = self.placeItems.id
-            }) {
-                ZStack {
-                    Image(self.placeItems.pointImage).renderingMode(.original)
+        Button(action: {
+            self.selectedPoint.selectedIndex = self.placeItems.id
+        }) {
+            ZStack {
+//                アクティブになった場合
+                if self.selectedPoint.selectedIndex == self.placeItems.id {
+//                    Text("✓")
+//                        .font(.system(size: 30, weight: .bold))
+//                        .foregroundColor(.white)
+                    Image(self.placeItems.pointImage)
+                        .renderingMode(.original)
                         .resizable()
                         .frame(width: 110, height: 110)
-                        .background(Color.red)
-                        .clipShape(Circle())
-                    
-                    if (self.selectedPoint.selectedIndex == self.placeItems.id) {
-                           Text("✓")
-                                .font(.system(size: 30, weight: .bold, design: Font.Design.default))
-                                .foregroundColor(Color.white)
-                    }
+                        .background(Color.black)
+                        .cornerRadius(4)
+                        .opacity(1)
+//                アクティブじゃない場合
+                } else {
+                    Image(self.placeItems.pointImage)
+                        .renderingMode(.original)
+                        .resizable()
+                        .frame(width: 110, height: 110)
+                        .background(Color.black)
+                        .cornerRadius(4)
+                        .opacity(0.4)
                 }
             }
         }
+//        .padding(.horizontal, 8)
     }
 }
 
+// 場所sheetのテキスト
 struct PlacesDetail: View {
     var placeItems: ActivitiesFamousPoints
     

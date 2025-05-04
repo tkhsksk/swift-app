@@ -95,7 +95,8 @@ struct ActivitiesContentView: View {
                                     ShopPromotionBannerView(activtiesItems: item, selectedActivity: self.selectedActivity)
                                             .frame(width: 120, height: 60)
                                 }
-                            }.padding(.leading, 30)
+                            }
+                            .padding(.leading, 30)
                             .padding(.trailing, 30)
                             .padding(.bottom, 10)
                         }
@@ -118,9 +119,10 @@ struct ActivitiesContentView: View {
                                             }
                                         }
                                         
-                                }.padding(.leading, 30)
-                                 .padding(.trailing, 30)
-                                 .padding(.bottom, 10)
+                                }
+                                .padding(.leading, 30)
+                                .padding(.trailing, 30)
+                                .padding(.bottom, 10)
                                 
                         }
                         
@@ -140,7 +142,10 @@ struct ActivitiesContentView: View {
                     }) {
                         Text("Log Out")
                     })
-            }.sheet(isPresented: self.$isShowing) { PlaceDetailView(isShowing: self.$isShowing, placeItem: self.$placeItemSelected)}
+            }.sheet(isPresented: self.$isShowing) { PlaceDetailView(
+                isShowing: self.$isShowing,
+                placeItem: self.$placeItemSelected
+            )}
         }
     }
 }
@@ -151,14 +156,15 @@ struct ShopBestSellerViews: View {
     
     var body: some View {
             ZStack{
-                Image("\(activityPlaces.activityPlaceImage)").renderingMode(.original)
-                        .resizable()
-                        .frame(width: 155, height: 225)
-                        .background(Color.black)
-                        .cornerRadius(10)
-                        .opacity(0.8)
-                        .aspectRatio(contentMode: .fill)
-               
+                Image("\(activityPlaces.activityPlaceImage)")
+                    .renderingMode(.original)
+                    .resizable()
+                    .frame(width: 155, height: 225)
+                    .background(Color.black)
+                    .cornerRadius(10)
+                    .opacity(0.8)
+                    .aspectRatio(contentMode: .fill)
+           
                 VStack (alignment: .leading) {
                     Spacer()
                     
@@ -188,7 +194,8 @@ struct ShopPromotionBannerView: View {
         }) {
             GeometryReader { g in
                    ZStack{
-                    Image("\(self.activtiesItems.activityImage)").renderingMode(.original)
+                    Image("\(self.activtiesItems.activityImage)")
+                       .renderingMode(.original)
                        .resizable()
                        .opacity(0.8)
                        .aspectRatio(contentMode: .fill)
@@ -202,10 +209,11 @@ struct ShopPromotionBannerView: View {
                     } else {
                              Text(self.activtiesItems.activityName)
                                     .font(.system(size: 14, weight: .bold, design: Font.Design.default))
-                                     .foregroundColor(Color.white)
+                                    .foregroundColor(Color.white)
                     }
                                
-                   }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                   }
+                   .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                    .cornerRadius(15)
                }
         }
@@ -240,14 +248,16 @@ struct ShopNewProductViews: View {
                                                     .frame(width: 150, height: 200)
                             }
                             
-                        }.padding(.leading, 18)
+                        }
+                        .padding(.leading, 18)
                         .padding(.trailing, 18)
-                            .padding(.top, 25)
+                        .padding(.top, 25)
                     }
                     
                      Spacer()
                 }
-                }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                }
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                 .background(Color(red: 242 / 255, green: 242 / 255, blue: 242 / 255))
                 .cornerRadius(10)
                 

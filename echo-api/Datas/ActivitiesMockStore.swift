@@ -15,21 +15,21 @@ class ActivitiesMockStore {
             id: 0,
             activityName: "SURFING",
             activityNameLabel: "Surfing",
-            activityImage: "surfing",
+            activityImage: "category-surfing",
             selectedActivity: false
         ),
         ActivitiesItem(
             id: 1,
             activityName: "SNOWBOARD",
             activityNameLabel: "Snowboarding",
-            activityImage: "snowboarding",
+            activityImage: "category-snowboarding",
             selectedActivity: false
         ),
         ActivitiesItem(
             id: 2,
             activityName: "HIKING",
             activityNameLabel: "Hiking",
-            activityImage: "hiking",
+            activityImage: "category-hiking",
             selectedActivity: false
         )
         
@@ -42,27 +42,34 @@ class ActivitiesMockStore {
             activitiesPlaces:[ActivitiesPlaces(
                 id: 0,
                 activityPlace: "Costa Rica",
-                activityPlaceImage: "costarica",
+                activityPlaceImage: "category-surfing-data",
                 famousPointsArray: [ActivitiesFamousPoints(
                     id: 0,
                     pointName: "Tamarindo",
-                    pointImage: "tamarindo",
+                    pointImage: "category-surfing-0",
                     pointDescription: "Tamarindo is a town in the Guanacaste Province, on Costa Rica’s Pacific coast. It’s known for beaches with strong surf, like Playa Tamarindo and Playa Langosta. To the north, Playa Grande beach is a major nesting site for huge leatherback turtles, and forms part of Las Baulas National Marine Park"
                 ),
-                                                                                                                       
+                                    
             ActivitiesFamousPoints(
                 id: 1,
                 pointName: "Jaco",
-                pointImage: "jaco",
+                pointImage: "category-surfing-1",
                 pointDescription: "Jacó is a town on the Pacific coast of Costa Rica, southwest of the capital city, San José. It's known for its surf beaches and nightlife, and as a gateway to national parks. Rocky, gray-sand Jacó Beach is west of town. Southeast, Hermosa Beach has big waves."
-            ),
+                ),
             
             ActivitiesFamousPoints(
                 id: 2,
                 pointName: "Dominical",
-                pointImage: "dominical",
+                pointImage: "category-surfing-2",
                 pointDescription: "Dominical is a beach-front town in Bahía Ballena de Osa District in the province of Puntarenas in Costa Rica, approximately 45 km south of Quepos. It is well known for large, year-round waves and is popular among surfers in Costa Rica. The town began as a small fishing village"
-            )
+                ),
+                                    
+            ActivitiesFamousPoints(
+                id: 3,
+                pointName: "Dominical",
+                pointImage: "category-surfing-2",
+                pointDescription: "Dominical is a beach-front town in Bahía Ballena de Osa District in the province of Puntarenas in Costa Rica, approximately 45 km south of Quepos. It is well known for large, year-round waves and is popular among surfers in Costa Rica. The town began as a small fishing village"
+                ),
             ]),
              
              ActivitiesPlaces(
@@ -72,14 +79,14 @@ class ActivitiesMockStore {
                 famousPointsArray: [ActivitiesFamousPoints(
                     id: 0,
                     pointName: "Kuta",
-                    pointImage: "kuta",
+                    pointImage: "category-snowboarding-0",
                     pointDescription: "Kuta is a beach and resort area in the south of the island of Bali, Indonesia. One of Bali's first tourist developments, it's best known for its party-centric atmosphere and surfing in the Indian Ocean. Kuta's long, consistent waves make it a popular surf spot, particularly for beginners"
                 ),
              
                  ActivitiesFamousPoints(
                     id: 1,
                     pointName: "Jimbaran",
-                    pointImage: "jimbaran",
+                    pointImage: "category-snowboarding-1",
                     pointDescription: "Jimbaran Bay has a long beach with calm waters. It's lined with fish restaurants and backed by tropical forest. At its northern end, colorful boats are pulled up by the lively, open-air Kedonganan fish market. Southwest of the bay are Dreamland Beach and Balangan Beach, known for their strong surf waves."
                  )
              ]),
