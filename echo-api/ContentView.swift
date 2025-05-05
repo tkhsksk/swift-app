@@ -7,7 +7,7 @@ struct ContentView: View {
         if session.isLoggedIn {
             HomeView()
         } else {
-            LoginView()
+            WelcomeView()
         }
     }
 }

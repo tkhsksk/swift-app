@@ -6,12 +6,8 @@ struct YourAppApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if session.isLoggedIn {
-                HomeView()
-            } else {
-                LoginView()
-            }
+            ContentView()
+                .environmentObject(session)
         }
-        .environmentObject(session)
     }
 }
