@@ -15,10 +15,10 @@ struct HomeView: View {
             }
         }
 //        アラートの表示
-        .alert("ログインに成功しました", isPresented: $showAlert) {
-            Button("OK", role: .cancel) { }
-        } message: {
-            Text("セッションID: \(displayedSessionID.isEmpty ? "未取得" : displayedSessionID)")
-        }
+//        .alert("ログインに成功しました", isPresented: $showAlert) {
+//            Button("OK", role: .cancel) { }
+//        } message: {
+//            Text("セッションID: \(displayedSessionID.isEmpty ? "未取得" : displayedSessionID)")
+//        }
     }
 }

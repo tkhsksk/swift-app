@@ -20,12 +20,13 @@ struct WelcomeView: View {
                         Text("すでにユーザー登録済みの方は\nログインに進んでください")
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 60)
+                            .font(.headline)
                     }
                     
                     VStack(spacing: 15) {
                         NavigationLink(destination: LoginView()) {
                             Text("ログイン")
-                                .font(.headline)
+                                .font(.subheadline)
                                 .foregroundColor(.white)
                                 .padding(13)
                                 .frame(width: 290)
@@ -35,14 +36,14 @@ struct WelcomeView: View {
                         
                         NavigationLink(destination: LoginView()) {
                             Text("ユーザー登録")
-                                .font(.headline)
+                                .font(.subheadline)
                                 .foregroundColor(.black)
                                 .padding(13)
                                 .frame(width: 290)
                                 .background(Color.white)
                                 .cornerRadius(10)
                                 .overlay(RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.black, lineWidth: 2))
+                                    .stroke(Color.black, lineWidth: 1))
                         }
                     }
                 }
