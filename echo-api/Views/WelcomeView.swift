@@ -11,8 +11,8 @@ struct WelcomeView: View {
                         Image("logo")
                             .resizable()
                             .frame(
-                                width: 120,
-                                height: 105,
+                                width: 180,
+                                height: 38,
                                 alignment: .center
                             )
                         
@@ -20,7 +20,7 @@ struct WelcomeView: View {
                         Text("すでにユーザー登録済みの方は\nログインに進んでください")
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 60)
-                            .font(.headline)
+                            .font(.subheadline)
                     }
                     
                     VStack(spacing: 15) {
