@@ -34,7 +34,7 @@ struct WelcomeView: View {
                                 .cornerRadius(10)
                         }
                         
-                        NavigationLink(destination: LoginView()) {
+                        NavigationLink(destination: RegisterView()) {
                             Text("ユーザー登録")
                                 .font(.subheadline)
                                 .foregroundColor(.black)

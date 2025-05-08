@@ -1,8 +1,8 @@
 import Foundation
 import KeychainAccess
 
-class APIService {
-    static let shared = APIService()
+class AuthAPI {
+    static let shared = AuthAPI()
     private let keychain = Keychain(service: "com.yourapp.identifier")
 
     var sessionID: String? {
@@ -16,22 +16,21 @@ class APIService {
         }
     }
 
-    func login(email: String, password: String, completion: @escaping (Bool) -> Void) {
+    func registerUser(name: String, email: String, password: String, completion: @escaping (Bool) -> Void) {
         guard let baseURL = Bundle.main.object(forInfoDictionaryKey: "API_URL") as? String else {
-            print("API_URLをInfo.plist から取得できませんでした")
+            print("API_URLをInfo.plistから取得できませんでした")
             return
         }
 
-        guard let url = URL(string: baseURL + "/auth/user/login") else {
-            print("URL生成に失敗しました: \(baseURL + "/auth/user/login")")
+        guard let url = URL(string: baseURL + "/auth/user/register") else {
+            print("URL生成に失敗しました: \(baseURL + "/auth/user/register")")
             return
         }
-
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let body = ["email": email, "password": password]
+        let body = ["name": name, "email": email, "password": password]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
 
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -43,7 +42,7 @@ class APIService {
                 return
             }
 
-            if message == "ログイン成功" {
+            if message == "登録成功" {
                 self.sessionID = sessionId
                 DispatchQueue.main.async { completion(true) }
             } else {
