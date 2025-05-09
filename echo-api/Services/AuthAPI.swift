@@ -1,20 +1,7 @@
 import Foundation
-import KeychainAccess
 
 class AuthAPI {
     static let shared = AuthAPI()
-    private let keychain = Keychain(service: "com.yourapp.identifier")
-
-    var sessionID: String? {
-        get { keychain["session_id"] }
-        set {
-            if let id = newValue {
-                keychain["session_id"] = id
-            } else {
-                try? keychain.remove("session_id")
-            }
-        }
-    }
 
     func registerUser(name: String, email: String, password: String, completion: @escaping (Bool) -> Void) {
         guard let baseURL = Bundle.main.object(forInfoDictionaryKey: "API_URL") as? String else {
@@ -36,22 +23,16 @@ class AuthAPI {
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data,
                   let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                  let message = json["message"] as? String,
-                  let sessionId = json["session_id"] as? String else {
+                  let message = json["message"] as? String else {
                 DispatchQueue.main.async { completion(false) }
                 return
             }
 
             if message == "登録成功" {
-                self.sessionID = sessionId
                 DispatchQueue.main.async { completion(true) }
             } else {
                 DispatchQueue.main.async { completion(false) }
             }
         }.resume()
-    }
-
-    func logout() {
-        sessionID = nil
     }
 }

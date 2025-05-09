@@ -3,10 +3,11 @@ import SwiftUI
 struct LoginView: View {
     @EnvironmentObject var session: SessionManager
     @State private var email = "user@example.com"
-    @State private var password = "password123"
+    @State private var password = "Password123"
     @State private var loginFailed = false
     @State private var isLoggedIn = false
     @State private var showAlert = false
+    
     var greeting: [String] {
         let hour = Calendar.current.component(.hour, from: Date())
         switch hour {

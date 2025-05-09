@@ -1,18 +1,18 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @EnvironmentObject var session: SessionManager
     @State private var name = "hoge"
-    @State private var email = "user@example.com"
-    @State private var password = "password123"
-    @State private var loginFailed = false
-    @State private var isLoggedIn = false
+    @State private var email = "hoge+006@example.com"
+    @State private var password = "Password123"
+    @State private var registerFailed = false
+    @State private var isRegistered = false
     @State private var showAlert = false
+    
     var greeting: [String] {
         let hour = Calendar.current.component(.hour, from: Date())
         switch hour {
             case 9..<18: return [
-                "ログイン情報が違います",
+                "登録に失敗しました",
                 "メールアドレスもしくはパスワードをご確認ください"
             ]
             default: return [
@@ -23,7 +23,7 @@ struct RegisterView: View {
     }
 //    ここからページの本体
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 Image("bg")
                 .resizable()
@@ -86,15 +86,12 @@ struct RegisterView: View {
                         
                         VStack {
                             Button("登録") {
-                                loginFailed = false
+                                registerFailed = false
                                 AuthAPI.shared.registerUser(name: name, email: email, password: password) { success in
                                     if success {
-                                        if let sessionID = AuthAPI.shared.sessionID {
-                                            session.updateSessionID(sessionID) // セッションをアップデート
-                                        }
-                                        isLoggedIn = true
+                                        isRegistered = true
                                     } else {
-                                        loginFailed = true
+                                        registerFailed = true
                                         showAlert = true
                                     }
                                 }
@@ -109,6 +106,11 @@ struct RegisterView: View {
                     }
                     .frame(maxWidth: 350)
                 }
+                
+                .navigationDestination(isPresented: $isRegistered) {
+                    LoginView()
+                }
+                
 //              アラートの表示
                 .alert(greeting[0], isPresented: $showAlert) {
                 Button("OK", role: .cancel) { }
@@ -116,6 +118,7 @@ struct RegisterView: View {
                 Text(greeting[1])
                 }
                 .padding()
+                
                 Spacer() //  下部スペース
             }
         }
