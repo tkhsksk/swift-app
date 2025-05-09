@@ -4,7 +4,13 @@ struct WelcomeView: View {
 //    ここからページの本体
     var body: some View {
         NavigationView {
-            VStack {
+            ZStack {
+                Image("bg")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+                .opacity(0.8)
+                .background(Color.black)
                 Spacer() // 上部スペース
                 VStack(spacing: 50) {
                     VStack(spacing: 30) {
@@ -12,7 +18,7 @@ struct WelcomeView: View {
                             .resizable()
                             .frame(
                                 width: 180,
-                                height: 38,
+                                height: 50,
                                 alignment: .center
                             )
                         
@@ -21,6 +27,7 @@ struct WelcomeView: View {
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 60)
                             .font(.subheadline)
+                            .foregroundColor(.white)
                     }
                     
                     VStack(spacing: 15) {
@@ -28,7 +35,7 @@ struct WelcomeView: View {
                             Text("ログイン")
                                 .font(.subheadline)
                                 .foregroundColor(.white)
-                                .padding(13)
+                                .padding(14)
                                 .frame(width: 290)
                                 .background(Color.black)
                                 .cornerRadius(10)

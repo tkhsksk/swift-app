@@ -23,46 +23,105 @@ struct RegisterView: View {
     }
 //    ここからページの本体
     var body: some View {
-        VStack(spacing: 16) {
-            Text("ユーザー登録").font(.largeTitle)
-            TextField("ユーザー名", text: $name)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .autocapitalization(.none)
-            
-            TextField("メールアドレス", text: $email)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .autocapitalization(.none)
-
-            SecureField("パスワード", text: $password)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-
-            Button("登録") {
-                loginFailed = false
-                AuthAPI.shared.registerUser(name: name, email: email, password: password) { success in
-                    if success {
-                        if let sessionID = AuthAPI.shared.sessionID {
-                            session.updateSessionID(sessionID) // セッションをアップデート
-                        }
-                        isLoggedIn = true
-                    } else {
-                        loginFailed = true
-                        showAlert = true
+        NavigationView {
+            ZStack {
+                Image("bg")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+                .opacity(0.8)
+                .background(Color.black)
+                Spacer() // 上部スペース
+                VStack(spacing: 50) {
+                    VStack(spacing: 30) {
+                        Image("logo")
+                            .resizable()
+                            .frame(
+                                width: 180,
+                                height: 50,
+                                alignment: .center
+                            )
+                        
+                        // Text("Welcome to ksk318.me")
                     }
+                    VStack(spacing: 40) {
+                        VStack(spacing: 15) {
+                            VStack{
+                                Text("ユーザー名")
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.horizontal, 60)
+                                    .font(.subheadline)
+                                    .foregroundColor(.white)
+                                TextField("ユーザー名", text: $name)
+                                    .padding(13)
+                                    .background(Color(red: 242/256, green: 241/256, blue: 256/256))
+                                    .cornerRadius(10)
+                                    .foregroundColor(.black)
+                            }
+                            VStack{
+                                Text("メールアドレス")
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.horizontal, 60)
+                                    .font(.subheadline)
+                                    .foregroundColor(.white)
+                                TextField("メールアドレス", text: $email)
+                                    .padding(13)
+                                    .background(Color(red: 242/256, green: 241/256, blue: 256/256))
+                                    .cornerRadius(10)
+                                    .foregroundColor(.black)
+                            }
+                            VStack{
+                                Text("パスワード")
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.horizontal, 60)
+                                    .font(.subheadline)
+                                    .foregroundColor(.white)
+                                SecureField("パスワード", text: $password)
+                                    .padding(13)
+                                    .background(Color(red: 242/256, green: 241/256, blue: 256/256))
+                                    .cornerRadius(10)
+                                    .foregroundColor(.black)
+                            }
+                        }
+                        
+                        VStack {
+                            Button("登録") {
+                                loginFailed = false
+                                AuthAPI.shared.registerUser(name: name, email: email, password: password) { success in
+                                    if success {
+                                        if let sessionID = AuthAPI.shared.sessionID {
+                                            session.updateSessionID(sessionID) // セッションをアップデート
+                                        }
+                                        isLoggedIn = true
+                                    } else {
+                                        loginFailed = true
+                                        showAlert = true
+                                    }
+                                }
+                            }
+                        }
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                        .padding(12)
+                        .frame(width: 280)
+                        .background(Color.black)
+                        .cornerRadius(10)
+                    }
+                    .frame(maxWidth: 350)
                 }
+//              アラートの表示
+                .alert(greeting[0], isPresented: $showAlert) {
+                Button("OK", role: .cancel) { }
+                } message: {
+                Text(greeting[1])
+                }
+                .padding()
+                Spacer() //  下部スペース
             }
-            .padding(.top)
-            
         }
-//        アラートの表示
-        .alert(greeting[0], isPresented: $showAlert) {
-            Button("OK", role: .cancel) { }
-        } message: {
-            Text(greeting[1])
-        }
-        .padding()
     }
 }
 
 #Preview {
-    LoginView()
+    RegisterView()
 }
