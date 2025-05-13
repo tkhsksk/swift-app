@@ -1,12 +1,14 @@
 import SwiftUI
 
 struct RegisterView: View {
+    @EnvironmentObject var messageManager: MessageManager
     @State private var name = "hoge"
-    @State private var email = "hoge+006@example.com"
+    @State private var email = "hoge+021@example.com"
     @State private var password = "Password123"
     @State private var registerFailed = false
     @State private var isRegistered = false
     @State private var showAlert = false
+    @Environment(\.dismiss) var dismiss
     
     var greeting: [String] {
         let hour = Calendar.current.component(.hour, from: Date())
@@ -87,7 +89,12 @@ struct RegisterView: View {
                         VStack {
                             Button("登録") {
                                 registerFailed = false
-                                AuthAPI.shared.registerUser(name: name, email: email, password: password) { success in
+                                AuthAPI.shared.registerUser(
+                                    name: name,
+                                    email: email,
+                                    password: password,
+                                    messageManager: messageManager
+                                ) { success in
                                     if success {
                                         isRegistered = true
                                     } else {
@@ -120,6 +127,21 @@ struct RegisterView: View {
                 .padding()
                 
                 Spacer() //  下部スペース
+            }
+        }
+        
+//        戻るボタンのカスタマイズ
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.backward")
+                        Text("初回画面")
+                    }
+                }
             }
         }
     }

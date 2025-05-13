@@ -39,9 +39,9 @@ class APIService {
                   let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                   let message = json["message"] as? String,
                   let sessionId = json["session_id"] as? String else {
-                DispatchQueue.main.async { completion(false) }
-                return
-            }
+                        DispatchQueue.main.async { completion(false) }
+                        return
+                  }
 
             if message == "ログイン成功" {
                 self.sessionID = sessionId

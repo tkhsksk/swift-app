@@ -1,12 +1,14 @@
 import SwiftUI
 
 struct LoginView: View {
+    @EnvironmentObject var messageManager: MessageManager
     @EnvironmentObject var session: SessionManager
     @State private var email = "user@example.com"
     @State private var password = "Password123"
     @State private var loginFailed = false
     @State private var isLoggedIn = false
     @State private var showAlert = false
+    @Environment(\.dismiss) var dismiss
     
     var greeting: [String] {
         let hour = Calendar.current.component(.hour, from: Date())
@@ -81,9 +83,11 @@ struct LoginView: View {
                                             session.updateSessionID(sessionID) // セッションをアップデート
                                         }
                                         isLoggedIn = true
+                                        messageManager.show("登録成功！", type: .success)
                                     } else {
                                         loginFailed = true
                                         showAlert = true
+                                        messageManager.show("登録失敗", type: .error)
                                     }
                                 }
                             }
@@ -103,10 +107,39 @@ struct LoginView: View {
                 } message: {
                 Text(greeting[1])
                 }
+                
+                .alert(isPresented: Binding(
+                    get: { messageManager.message != nil },
+                    set: { newValue in if !newValue { messageManager.clear() } }
+                )) {
+                    Alert(
+                        title: Text("お知らせ"),
+                        message: Text(messageManager.message ?? ""),
+                        dismissButton: .default(Text("OK")) {
+                            messageManager.clear()
+                        }
+                    )
+                }
+                
                 .padding()
                 Spacer() //  下部スペース
             }
         }
+        
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.backward")
+                        Text("初回画面")
+                    }
+                }
+            }
+        }
+        
     }
 }
 

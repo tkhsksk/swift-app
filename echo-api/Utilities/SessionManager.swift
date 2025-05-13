@@ -2,7 +2,7 @@ import Foundation
 
 class SessionManager: ObservableObject {
     @Published var isLoggedIn: Bool = false
-    @Published var sessionID: String? // ← 必ずここに定義すること！
+    @Published var sessionID: String?
 
     init() {
         if let storedSessionID = APIService.shared.sessionID {
