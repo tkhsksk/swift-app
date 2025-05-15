@@ -2,27 +2,17 @@ import SwiftUI
 
 struct RegisterView: View {
     @EnvironmentObject var messageManager: MessageManager
+    @EnvironmentObject var session: SessionManager
     @State private var name = "hoge"
-    @State private var email = "hoge+021@example.com"
+    @State private var email = "hoge@example.com"
     @State private var password = "Password123"
     @State private var registerFailed = false
     @State private var isRegistered = false
     @State private var showAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
     @Environment(\.dismiss) var dismiss
     
-    var greeting: [String] {
-        let hour = Calendar.current.component(.hour, from: Date())
-        switch hour {
-            case 9..<18: return [
-                "登録に失敗しました",
-                "メールアドレスもしくはパスワードをご確認ください"
-            ]
-            default: return [
-                "APIが稼働していません",
-                "9:00〜18:00の間に再度お試しください"
-            ]
-        }
-    }
 //    ここからページの本体
     var body: some View {
         NavigationStack {
@@ -87,42 +77,49 @@ struct RegisterView: View {
                         }
                         
                         VStack {
-                            Button("登録") {
+                            Button(action: {
                                 registerFailed = false
                                 AuthAPI.shared.registerUser(
                                     name: name,
                                     email: email,
                                     password: password,
                                     messageManager: messageManager
-                                ) { success in
+                                ) { success, message in
                                     if success {
                                         isRegistered = true
+                                        session.registered(email: email)
                                     } else {
+                                        isRegistered = false
+                                        alertTitle = "登録に失敗しました"
+                                        alertMessage = message
                                         registerFailed = true
                                         showAlert = true
                                     }
                                 }
+                            }) {
+                                Text("登録")
+                                    .font(.subheadline)
+                                    .foregroundColor(.white)
+                                    .padding(12)
+                                    .frame(width: 280)
+                                    .background(Color.black)
+                                    .cornerRadius(10)
                             }
                         }
-                        .font(.subheadline)
-                        .foregroundColor(.white)
-                        .padding(12)
-                        .frame(width: 280)
-                        .background(Color.black)
-                        .cornerRadius(10)
                     }
                     .frame(maxWidth: 350)
                 }
                 
                 .navigationDestination(isPresented: $isRegistered) {
                     LoginView()
+                    .navigationBarBackButtonHidden(true) 
                 }
                 
 //              アラートの表示
-                .alert(greeting[0], isPresented: $showAlert) {
-                Button("OK", role: .cancel) { }
+                .alert(alertTitle, isPresented: $showAlert) {
+                    Button("OK", role: .cancel) { }
                 } message: {
-                Text(greeting[1])
+                    Text(alertMessage)
                 }
                 .padding()
                 
@@ -130,19 +127,9 @@ struct RegisterView: View {
             }
         }
         
-//        戻るボタンのカスタマイズ
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    dismiss()
-                }) {
-                    HStack {
-                        Image(systemName: "chevron.backward")
-                        Text("初回画面")
-                    }
-                }
-            }
+//        alertメッセージの削除
+        .onDisappear {
+            messageManager.clear()
         }
     }
 }

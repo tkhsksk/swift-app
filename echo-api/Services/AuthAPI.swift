@@ -8,7 +8,7 @@ class AuthAPI {
         email: String,
         password: String,
         messageManager: MessageManager, // ← 追加
-        completion: @escaping (Bool) -> Void
+        completion: @escaping (Bool, String) -> Void
     ) {
         guard let baseURL = Bundle.main.object(forInfoDictionaryKey: "API_URL") as? String else {
             print("API_URLをInfo.plistから取得できませんでした")
@@ -32,18 +32,18 @@ class AuthAPI {
                   let message_api = json["message"] as? String else {
                 DispatchQueue.main.async {
                     messageManager.show("通信エラーが発生しました", type: .error)
-                    completion(false)
+                    completion(false, "通信エラーが発生しました")
                 }
                 return
             }
 
             DispatchQueue.main.async {
                 if message_api == "登録成功" {
-                    messageManager.show("登録成功！", type: .success)
-                    completion(true)
+                    messageManager.show(message_api, type: .success)
+                    completion(true, message_api)
                 } else {
-                    messageManager.show("登録失敗", type: .error)
-                    completion(false)
+                    messageManager.show(message_api, type: .error)
+                    completion(false, message_api)
                 }
             }
         }.resume()

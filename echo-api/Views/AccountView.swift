@@ -29,6 +29,18 @@ struct AccountView: View {
                     .padding(.bottom, 10)
                 Text("John Appleseed")
                     .font(.system(size: 20))
+                
+                NavigationLink(destination: MyPageView()) {
+                    Text("test")
+                        .font(.subheadline)
+                        .foregroundColor(.black)
+                        .padding(13)
+                        .frame(width: 290)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                        .overlay(RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.black, lineWidth: 1))
+                }
                     
                 Form {
                     

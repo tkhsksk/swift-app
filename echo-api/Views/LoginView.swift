@@ -3,7 +3,7 @@ import SwiftUI
 struct LoginView: View {
     @EnvironmentObject var messageManager: MessageManager
     @EnvironmentObject var session: SessionManager
-    @State private var email = "user@example.com"
+    @State private var email = ""
     @State private var password = "Password123"
     @State private var loginFailed = false
     @State private var isLoggedIn = false
@@ -59,6 +59,12 @@ struct LoginView: View {
                                     .background(Color(red: 242/256, green: 241/256, blue: 256/256))
                                     .cornerRadius(10)
                                     .foregroundColor(.black)
+                                    .onAppear {
+                                        // セッションに保存されたメールアドレスがあれば自動入力
+                                        if let sessionEmail = session.email {
+                                            email = sessionEmail
+                                        }
+                                    }
                             }
                             VStack{
                                 Text("パスワード")
@@ -75,7 +81,7 @@ struct LoginView: View {
                         }
                         
                         VStack {
-                            Button("ログイン") {
+                            Button(action: {
                                 loginFailed = false
                                 APIService.shared.login(email: email, password: password) { success in
                                     if success {
@@ -83,6 +89,7 @@ struct LoginView: View {
                                             session.updateSessionID(sessionID) // セッションをアップデート
                                         }
                                         isLoggedIn = true
+                                        session.registered(email: email)
                                         messageManager.show("登録成功！", type: .success)
                                     } else {
                                         loginFailed = true
@@ -90,22 +97,24 @@ struct LoginView: View {
                                         messageManager.show("登録失敗", type: .error)
                                     }
                                 }
+                            }) {
+                                Text("ログイン")
+                                    .font(.subheadline)
+                                    .foregroundColor(.white)
+                                    .padding(12)
+                                    .frame(width: 280)
+                                    .background(Color.black)
+                                    .cornerRadius(10)
                             }
                         }
-                        .font(.subheadline)
-                        .foregroundColor(.white)
-                        .padding(12)
-                        .frame(width: 280)
-                        .background(Color.black)
-                        .cornerRadius(10)
                     }
                     .frame(maxWidth: 350)
                 }
 //              アラートの表示
                 .alert(greeting[0], isPresented: $showAlert) {
-                Button("OK", role: .cancel) { }
+                    Button("OK", role: .cancel) { }
                 } message: {
-                Text(greeting[1])
+                    Text(greeting[1])
                 }
                 
                 .alert(isPresented: Binding(
@@ -125,21 +134,11 @@ struct LoginView: View {
                 Spacer() //  下部スペース
             }
         }
-        
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    dismiss()
-                }) {
-                    HStack {
-                        Image(systemName: "chevron.backward")
-                        Text("初回画面")
-                    }
-                }
-            }
+
+//      alertメッセージの削除
+        .onDisappear {
+            messageManager.clear()
         }
-        
     }
 }
 
