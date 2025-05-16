@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct AccountView: View {
+    @StateObject private var viewModel = ProfileViewModel()
+    
     @State var notificationToggle: Bool = false
     @State var locationUsage: Bool = false
     @State var username: String = "James"
@@ -27,19 +29,12 @@ struct AccountView: View {
                     .background(Color.yellow)
                     .clipShape(Circle())
                     .padding(.bottom, 10)
-                Text("John Appleseed")
-                    .font(.system(size: 20))
                 
-                NavigationLink(destination: MyPageView()) {
-                    Text("test")
-                        .font(.subheadline)
-                        .foregroundColor(.black)
-                        .padding(13)
-                        .frame(width: 290)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .overlay(RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.black, lineWidth: 1))
+                if viewModel.isLoading {
+                    ProgressView("読み込み中…")
+                } else if let profile = viewModel.profile {
+                    Text(profile.name)
+                        .font(.system(size: 20))
                 }
                     
                 Form {
@@ -69,9 +64,9 @@ struct AccountView: View {
                         }
 
                     }
-                    Section(header: Text("Personal Information")) {
-                       NavigationLink(destination: Text("Profile Info")) {
-                            Text("Profile Information")
+                    Section(header: Text("アカウント設定")) {
+                        NavigationLink(destination: AccountDetailView()) {
+                            Text("プロフィール設定")
                         }
                        
                         NavigationLink(destination: Text("Billing Info")) {
@@ -88,8 +83,12 @@ struct AccountView: View {
                         }
                     }
                         
-            }.background(Color(red: 242 / 255, green: 242 / 255, blue: 242 / 255))
+            }
+            .background(Color(red: 242 / 255, green: 242 / 255, blue: 242 / 255))
             .navigationBarTitle("Settings")
+            .onAppear {
+                viewModel.loadProfile()
+            }
          }
         }
     }

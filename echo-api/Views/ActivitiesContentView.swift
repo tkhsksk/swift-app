@@ -136,12 +136,20 @@ struct ActivitiesContentView: View {
                         
                     }
                     .navigationBarTitle("Activities")
-                    .navigationBarItems(trailing:
-                    Button(action: {
-                        session.logout()
-                    }) {
-                        Text("Log Out")
-                    })
+                    .toolbar {
+                        // 右上に複数ボタンを並べる
+                        ToolbarItemGroup(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                session.logout()
+                            }) {
+                                Text("LogOut")
+                            }
+                            
+                            NavigationLink(destination: AccountView()) {
+                                Image(systemName: "person")
+                            }
+                        }
+                    }
             }.sheet(isPresented: self.$isShowing) { PlaceDetailView(
                 isShowing: self.$isShowing,
                 placeItem: self.$placeItemSelected

@@ -90,10 +90,14 @@ class APIService {
             do {
                 let decoder = JSONDecoder()
 
-                // ISO8601DateFormatter を使って日付を変換
                 let formatter = ISO8601DateFormatter()
-                formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-                
+                formatter.formatOptions = [
+                    .withInternetDateTime,
+                    .withFractionalSeconds,
+                    .withTimeZone,
+                    .withColonSeparatorInTimeZone
+                ]
+
                 decoder.dateDecodingStrategy = .custom { decoder in
                     let container = try decoder.singleValueContainer()
                     let dateStr = try container.decode(String.self)

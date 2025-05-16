@@ -3,7 +3,7 @@ import SwiftUI
 struct LoginView: View {
     @EnvironmentObject var messageManager: MessageManager
     @EnvironmentObject var session: SessionManager
-    @State private var email = ""
+    @State private var email = "hoge@example.com"
     @State private var password = "Password123"
     @State private var loginFailed = false
     @State private var isLoggedIn = false

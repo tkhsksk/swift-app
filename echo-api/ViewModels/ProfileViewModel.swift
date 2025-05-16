@@ -15,6 +15,7 @@ class ProfileViewModel: ObservableObject {
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
             }
+            print(self.profile)
         }
     }
 }

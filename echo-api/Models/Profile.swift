@@ -1,11 +1,11 @@
 import Foundation
 
-struct Profile: Codable, Identifiable {
+struct Profile: Codable, Identifiable, Equatable {
     let id: Int
     let name: String
     let email: String
     let status: String
-    let created_at: Date?
-    let updated_at: Date?
+    let createdAt: Date?
+    let updatedAt: Date?
     // サーバーのレスポンス形式に合わせて追加
 }
